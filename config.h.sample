@@ -1,0 +1,6 @@
+// Put your messages here and remove after compiling.
+// This file is listed in .gitignore
+#define N_KEYS (2)
+#define MAX_KEY_LEN (6)
+#define MESSAGE_KEYS { "-**", "-**-" }
+#define MESSAGE_VALUES { "date\n", "xyzzy" }
