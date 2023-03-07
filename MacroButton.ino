@@ -12,11 +12,11 @@
 
 // Rev4 marking: The on-board LED is connected to P1.
 // sadly I connected both to pin 1.  The multiplex works though.
-const int PIN=1;
+const int PIN = 1;
 
 const long TIMEOUT = 1500;
 const long DEBOUNCE_DELAY = 25;
-const long DIT_DAH_THRESHOLD = 200; // todo: should be auto-threshold
+const long DIT_DAH_THRESHOLD = 200;  // todo: should be auto-threshold
 const long ELEMENT_END_DELAY = 400;
 
 int button_state = RELEASED;
@@ -26,10 +26,10 @@ long last_released_time = 0;
 long last_debounce_time = 0;
 int state_index = 0;
 
-const int MAX_RX_LEN = MAX_KEY_LEN+1;
+const int MAX_RX_LEN = MAX_KEY_LEN + 1;
 const char KEYS[N_KEYS][MAX_KEY_LEN] = MESSAGE_KEYS;
 const char* MESSAGES[N_KEYS] = MESSAGE_VALUES;
-char RX[MAX_RX_LEN];		// +1 for null terminator
+char RX[MAX_RX_LEN];  // +1 for null terminator
 
 void clearState();
 void handleButton(int button_state, long delta);
@@ -39,9 +39,7 @@ void blink(int d);
 void setup() {
   pinMode(PIN, OUTPUT);
   digitalWrite(PIN, HIGH);
-  DigiKeyboard.delay(1);
   DigiKeyboard.sendKeyStroke(0);
-  DigiKeyboard.delay(250);
   digitalWrite(PIN, LOW);
   clearState();
   blink(100);
@@ -60,14 +58,14 @@ void loop() {
     if (reading != button_state) {
       button_state = reading;
       if (button_state == PRESSED) {
-	last_pressed_time = now;
-      }	else if (button_state == RELEASED) {
-	long delta_keydown = now - last_pressed_time;
-	last_pressed_time = 0;
-	handleButton(button_state, delta_keydown);
-	last_released_time = now;
+        last_pressed_time = now;
+      } else if (button_state == RELEASED) {
+        long delta_keydown = now - last_pressed_time;
+        last_pressed_time = 0;
+        handleButton(button_state, delta_keydown);
+        last_released_time = now;
       } else {
-	DigiKeyboard.println(F("BAD BUTTON STATE"));
+        DigiKeyboard.println(F("BAD BUTTON STATE"));
       }
     }
   }
@@ -79,17 +77,17 @@ void loop() {
     } else if (delta > ELEMENT_END_DELAY) {
       int k = key_matching_rx();
       if (k >= 0) {
-	send(k);
-	clearState();
+        send(k);
+        clearState();
       }
-    } 
-  } 
+    }
+  }
 
   last_button_state = reading;
 }
 
 void handleButton(int button_state, long delta) {
-  if (state_index+1 < MAX_RX_LEN) {
+  if (state_index + 1 < MAX_RX_LEN) {
     char elt = ((delta <= DIT_DAH_THRESHOLD) ? '*' : '-');
     RX[state_index++] = elt;
     RX[state_index] = '\0';
@@ -118,7 +116,7 @@ int key_matching_rx() {
   if (state_index > 0) {
     for (int k = 0; k < N_KEYS; k++) {
       if (strcmp(RX, KEYS[k]) == 0) {
-	return k;
+        return k;
       }
     }
   }
