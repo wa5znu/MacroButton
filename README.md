@@ -23,6 +23,12 @@ The DigiSpark boot loader has a 5-second timeout before it starts running applic
 ## Debouncing Issues
 Device general reliability was low, and after a number of other causes (boot time, hardware pin conflicts, timing issues, etc.) were resolved. At this point I had good LED and "print" statement feedback, and found that the button was hard to trigger and very bouncy when pressed hard enough to trigger. I cleaned it with electronics cleaner and found it much more reliable, though still bouncy.
 
+## Clones and Pins
+Some clones of, for example on Aliexpress, use Pin 5 as reset, so you need to prepare the switch board by cutting the SJ1 jumper and soldering SJ2, or vice versa.
+
+## Failure to boot
+About 1/3 of the devices fail to boot once the switch board is attached, even with all pins cut from the 6-pin header except the input pin. More study is needed.
+
 # References
 - DigiStump Hardware http://digistump.com/
 - DigiSpark USB Development Board http://digistump.com/products/1
